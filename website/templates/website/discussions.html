@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Discussions</title>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="../../static/css/beaware.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://kit.fontawesome.com/d62bbcad36.js" crossorigin="anonymous"></script>
+    <script>
+    function addpost(){
+            if ("{{user.is_authenticated|escapejs}}" === "True"){
+                console.log('{{user.username}}');
+                $.ajax({
+                    url: "{% url 'website:add_post' %}",
+                    data: {
+                        'user_id': {{ user.pk }},
+                        'title': $('#title').val(),
+                        'category': $('#category').val(),
+                        'content': $('#content').val()
+                    },
+                    success: function(data){
+                        window.location.reload()
+                    }
+                });
+            }else{
+                alert("Please sign in before writing a post.");
+            }
+        }
+    
+    function openCommentModal(post_id){
+            console.log(post_id);
+            $.ajax({
+                url: "{% url 'website:render_comment_modal' %}",
+                data: {
+                    'post_id': post_id
+                },
+                success: function(data){
+                    console.log('success');
+                    $('#comment_body').html(data);
+                    $('#comment_modal').modal('show');
+                }
+            })
+        }
+
+    function get_details(post_pk){
+            identifier = "#" + post_pk + "_post_details";
+            var contents = document.getElementsByClassName('dynamicContent');
+            console.log(contents);
+             for(let i=0; i< contents.length; i++){
+                contents[i].style.display="none";
+            }
+            $(identifier).fadeIn(900);
+    }
+
+    function like_comment(comment_pk){
+        liked_comments = "{{user.member.liked_comments}}"
+        disliked_comments = "{{user.member.dislike_comments}}"
+        identifier = "#"+ comment_pk + "_clike";
+        if (!disliked_comments.includes(comment_pk)){
+           if (liked_comments.includes(comment_pk)){
+                $(identifier).css("color", "black");
+                $.ajax({
+                    url: "{% url 'website:unlike_comment' %}",
+                    data:{
+                        'comment_id': comment_pk,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in unliking the post.");
+                        window.location.reload()
+
+                    }
+                });
+            }
+            else{
+                $(identifier).css("color", "blue");
+                $.ajax({
+                    url: "{% url 'website:like_comment' %}",
+                    data:{
+                        'comment_id': comment_pk,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in liking the post.");
+                         window.location.reload()
+                    }
+                });
+            }
+        }else{
+            identifier_dislikes = "#"+ comment_pk + "_cdislike";
+            $(identifier_dislikes).css("color", "black");
+             $.ajax({
+                    url: "{% url 'website:undislike_comment' %}",
+                    data:{
+                        'comment_id': comment_pk,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in undisliking the post.");
+                        identifier = "#"+ comment_pk + "_clike";
+                        $(identifier).css("color", "blue");
+                        $.ajax({
+                            url: "{% url 'website:like_comment' %}",
+                            data:{
+                                'comment_id': comment_pk,
+                                'member_id': "{{ user.member.pk }}"
+                            },
+                            success: function(){
+                                console.log("succeed in liking the comment.");
+                                 window.location.reload()
+                            }
+                        });
+                    }
+             });
+
+        }
+    }
+
+    function dislike_comment(comment_id){
+        disliked_comments = "{{user.member.dislike_comments}}"
+        liked_comments = "{{user.member.liked_comments}}"
+        identifier = "#"+ comment_id + "_cdislike";
+        if (!liked_comments.includes(comment_id)){
+           if (disliked_comments.includes(comment_id)){
+                $(identifier).css("color", "black");
+                $.ajax({
+                    url: "{% url 'website:undislike_comment' %}",
+                    data:{
+                        'comment_id': comment_id,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in undisliking the comment.");
+                        window.location.reload();
+                    }
+                });
+            }
+            else{
+                $(identifier).css("color", "red");
+                $.ajax({
+                    url: "{% url 'website:dislike_comment' %}",
+                    data:{
+                        'comment_id': comment_id,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in disliking the comment.");
+                        window.location.reload();
+                    }
+                });
+            }
+        }else{
+            identifier_likes = "#"+ comment_id + "_clike";
+            $(identifier_likes).css("color", "black");
+             $.ajax({
+                url: "{% url 'website:unlike_comment' %}",
+                data:{
+                    'comment_id': comment_id,
+                    'member_id': "{{ user.member.pk }}"
+                },
+                success: function(){
+                    console.log("succeed in unliking the post.");
+                    identifier = "#"+ comment_id + "_cdislike";
+                    $(identifier).css("color", "red");
+                    $.ajax({
+                        url: "{% url 'website:dislike_comment' %}",
+                        data:{
+                            'comment_id': comment_id,
+                            'member_id': "{{ user.member.pk }}"
+                        },
+                        success: function(){
+                            console.log("succeed in disliking the comment.");
+                             window.location.reload();
+                        }
+                    });
+                }
+              });
+
+        }
+    }
+
+    function like_post(post_pk){
+        liked_posts = "{{user.member.liked_post}}"
+        disliked_posts = "{{user.member.disliked_posts}}"
+        identifier = "#"+ post_pk + "_like";
+        if (!disliked_posts.includes(post_pk)){
+           if (liked_posts.includes(post_pk)){
+                $(identifier).css("color", "black");
+                $.ajax({
+                    url: "{% url 'website:unlike_post' %}",
+                    data:{
+                        'post_id': post_pk,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in unliking the post.");
+                        window.location.reload()
+
+                    }
+                });
+            }
+            else{
+                $(identifier).css("color", "blue");
+                $.ajax({
+                    url: "{% url 'website:like_post' %}",
+                    data:{
+                        'post_id': post_pk,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in liking the post.");
+						window.location.reload();
+                    }
+                });
+            }
+        }else{
+            console.log("this is a disliked post");
+            identifier_dislikes = "#"+ post_pk + "_dislike";
+            $(identifier_dislikes).css("color", "black");
+             $.ajax({
+                    url: "{% url 'website:undislike_post' %}",
+                    data:{
+                        'post_id': post_pk,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in undisliking the post.");
+                        $(identifier).css("color", "blue");
+                        $.ajax({
+                            url: "{% url 'website:like_post' %}",
+                            data:{
+                                'post_id': post_pk,
+                                'member_id': "{{ user.member.pk }}"
+                            },
+                            success: function(){
+                                console.log("succeed in liking the post.");
+                                 window.location.reload()
+                            }
+                        });
+                    }
+             });
+
+        }
+    }
+
+    function dislike_post(post_id){
+        disliked_posts = "{{user.member.disliked_posts}}"
+        liked_posts = "{{user.member.liked_post}}"
+        identifier = "#"+ post_id + "_dislike";
+        if (!liked_posts.includes(post_id)){
+           if (disliked_posts.includes(post_id)){
+                $(identifier).css("color", "black");
+                $.ajax({
+                    url: "{% url 'website:undislike_post' %}",
+                    data:{
+                        'post_id': post_id,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in undisliking the post.");
+                         window.location.reload()
+                    }
+                });
+            }
+            else{
+                $(identifier).css("color", "red");
+                $.ajax({
+                    url: "{% url 'website:dislike_post' %}",
+                    data:{
+                        'post_id': post_id,
+                        'member_id': "{{ user.member.pk }}"
+                    },
+                    success: function(){
+                        console.log("succeed in disliking the post.");
+                         window.location.reload()
+                    }
+                });
+            }
+        }else{
+            console.log("this is a liked post");
+            identifier_likes = "#"+ post_id + "_like";
+            $(identifier_likes).css("color", "black");
+             $.ajax({
+                url: "{% url 'website:unlike_post' %}",
+                data:{
+                    'post_id': post_id,
+                    'member_id': "{{ user.member.pk }}"
+                },
+                success: function(){
+                    console.log("succeed in unliking the post.");
+                    $(identifier).css("color", "red");
+                    $.ajax({
+                        url: "{% url 'website:dislike_post' %}",
+                        data:{
+                            'post_id': post_id,
+                            'member_id': "{{ user.member.pk }}"
+                        },
+                        success: function(){
+                            console.log("succeed in disliking the post.");
+                             window.location.reload()
+                        }
+                    });
+                }
+              });
+
+        }
+    }
+
+    function prepLikeAndDislikes(){
+        liked_posts = "{{user.member.liked_post }}";
+        disliked_posts = "{{user.member.disliked_posts}}";
+        var posts = document.getElementsByClassName('post');
+        for (let i=0; i < posts.length; i++){
+            pk= posts[i].id.split("_")[1]
+            if (liked_posts.includes(pk)){
+                posts[i].getElementsByClassName('like_post_btn')[0].style.color = 'blue';
+            }
+            if (disliked_posts.includes(pk)){
+                posts[i].getElementsByClassName('dislike_post_btn')[0].style.color = 'red';
+            }
+        }
+
+        liked_comments = "{{user.member.liked_comments }}";
+        disliked_comments = "{{user.member.dislike_comments }}";
+        var comments = document.getElementsByClassName('comment');
+        for (let i=0; i < comments.length; i++){
+            pk= comments[i].id.split("_")[1]
+            console.log(pk)
+            if (liked_comments.includes(pk)){
+                console.log("liked comment"+pk)
+                comments[i].getElementsByClassName('like_comment_btn')[0].style.color = 'blue';
+            }
+            if (disliked_comments.includes(pk)){
+                console.log("disliked comment"+pk)
+                comments[i].getElementsByClassName('dislike_comment_btn')[0].style.color = 'red';
+            }
+        }
+
+    }
+
+    function openReplyCommentModal(comment_id){
+        $.ajax({
+            url: "{% url 'website:render_reply_comment_modal' %}",
+            data: {
+                'comment_id': comment_id
+            },
+            success: function(data){
+                console.log('success');
+                $('#reply_comment_body').html(data);
+                $('#reply_modal').modal('show');
+            }
+        })
+    }
+
+    $(document).ready(function(){
+        prepLikeAndDislikes();
+    });
+    </script>
+</head>
+<body>
+    <nav id="navmenu" class="navbar navbar-expand-sm justify-content-center navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:home' %}">Home</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:topnews' %}">Top News</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:politics' %}">Politics</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:economics' %}">Economics</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:technology' %}">Technology</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:environment' %}">Environment</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:culture' %}">Culture</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:discussions' %}">Discussions</a>
+            </li>
+            {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link mt-2" href="" style="font-size: 12px;">{{user.username}}</a>
+                    </li>
+            {% else %}
+                <li class="nav-item ml-5">
+                        <a class="btn btn-primary p-2 mt-2"  style="color:white;"
+                           href="{% url 'website:login_view' %}">Sign In</a>
+                        <a class="btn btn-info p-2 mt-2" href="{% url 'website:sign_up' %}"
+                        >Sign Up</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="container px-3" style="height: 840px;">
+        <div class="row w-100 h-100" style="background-color: lightgrey;">
+            <div class="col-3 px-0">
+                <div class="flex-column bg-light px-0 w-100 h-100">
+                    <div class="bg-light px-2 text-right py-2" style="width: 100%;">
+                            <button class="btn btn-outline-info" style="width: fit-content;"
+                            data-toggle="modal" data-target="#add_post_modal">+ Write A Post</button>
+                    </div>
+                    {% for post in posts%}
+                    <a onclick="get_details('{{post.pk}}')">
+                        <div class="bg-white px-4 py-3 mx-auto mt-2" style="width:100%">
+                            <h5>{{post.title}}</h5>
+                            <div class="text-right" style="font-size: 12px;">
+                                {{post.user.user.username}}<br>
+                                {{post.release_date}}
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-9 p-0">
+                {% for post in posts %}
+                    <div class="dynamicContent flex-column h-100 p-0 w-100 mt-2" style="{%if forloop.counter > 1%}display:none;{% endif%} overflow:auto;" id="{{post.pk}}_post_details">
+                        <div id="post_{{post.pk}}" class="card mx-auto mt-3 post" style="width: 97%;">
+                            <div class="card-header bg-white py-0">
+                                <div class="text-right mt-2" style="font-size:12px;">{{post.user.user.username}}</div>
+                                <h5 class="card-title mt-0">{{post.title}}</h5>
+                            </div>
+                            <div class="card-body">
+                                {{post.content}}
+                            </div>
+                            <div class="card-footer bg-white p-0">
+                                <div class="btn-group float-right">
+                                    <button class="btn like_post_btn" id="{{post.pk}}_like" onclick="like_post('{{post.pk}}')">
+                                        <i class="far fa-thumbs-up mr-2"></i>
+                                        <span id="{{post.pk}}_nolikes">{{post.likes}}</span></button>
+                                    <button class="btn dislike_post_btn" id="{{post.pk}}_dislike" onclick="dislike_post('{{post.pk}}')">
+                                        <i class="far fa-thumbs-down mr-2"></i>
+                                        <span>{{post.dislikes}}</span></button>
+                                    <button class="btn" onclick="openCommentModal('{{post.pk}}')">
+                                        <i class="far fa-comment mr-2"></i>{{post.comment_set.all.count}}</button>
+                                </div>
+                            </div>
+                        </div>
+                        {% for comment in post.comment_set.all %}
+                            {% if comment.reply %}
+                                 <div id="comment_{{comment.pk}}" class="card mx-auto mt-1 p-1 comment" style="width: 97%;">
+                                    <div class="p-0 bg-white text-right"
+                                    style="font-size: 12px;">
+                                        {{comment.user.user.username}}
+                                    </div>
+                                    <div class="p-2 bg-light" style="border-left: 5px solid gray;">
+                                        <div class="float-right" style="font-size: 12px;">
+                                            {{ comment.get_reply_username }}
+                                        </div>
+                                        {{ comment.get_reply_comment.text }}
+                                    </div>
+                                    <div class="mx-3 mb-2">{{ comment.text }}</div>
+                                    <div class="card-footer bg-white p-0">
+                                        <div class="btn-group float-right">
+                                            <button class="btn like_comment_btn" id="{{comment.pk}}_clike" onclick="like_comment('{{comment.pk}}')">
+                                                <i class="far fa-thumbs-up mr-2"></i>
+                                                {{comment.likes}}</button>
+                                            <button class="btn dislike_comment_btn" id="{{comment.pk}}_cdislike" onclick="dislike_comment('{{comment.pk}}')">
+                                                <i class="far fa-thumbs-down mr-2"></i>{{comment.dislikes}}</button>
+                                            <button class="btn" onclick="openReplyCommentModal('{{comment.pk}}')"><i class="fas fa-reply"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div id="comment_{{comment.pk}}" class="card mx-auto mt-1 p-1 comment" style="width: 97%;">
+                                    <div class="p-0 bg-white text-right"
+                                    style="font-size: 12px;">
+                                        {{comment.user.user.username}}
+                                    </div>
+                                    <div class="mx-3 mb-2">{{ comment.text }}</div>
+                                    <div class="card-footer bg-white p-0">
+                                        <div class="btn-group float-right">
+                                            <button class="btn like_comment_btn" id="{{comment.pk}}_clike" onclick="like_comment('{{comment.pk}}')">
+                                                <i class="far fa-thumbs-up mr-2"></i>
+                                                {{comment.likes}}</button>
+                                            <button class="btn dislike_comment_btn" id="{{comment.pk}}_cdislike" onclick="dislike_comment('{{comment.pk}}')">
+                                                <i class="far fa-thumbs-down mr-2"></i>{{comment.dislikes}}</button>
+                                            <button class="btn" onclick="openReplyCommentModal('{{comment.pk}}')"><i class="fas fa-reply"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <footer id="footer" class="page-footer bg-indigo fixed-bottom padding-box" style="height: 55px;">
+    	
+    </footer>
+
+    <div id="add_post_modal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Write A Post
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                        <img src="../../static/letter.svg" style="width: 20%;" class="mx-auto">
+                        <table style="width: 90%;" class="mx-auto mt-3">
+                            <tr>
+                                <td><label for="title"> Title </label></td>
+                                <td><input type="text" id="title" class="w-100"
+                                           placeholder="Enter Title Of Post"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="category"> Category </label></td>
+                                <td><select id="category" class="w-100">
+                                        <option> -- </option>
+                                        <option value="politics">Politics</option>
+                                        <option value="economics">Economics</option>
+                                        <option value="environment">Environment</option>
+                                        <option value="technology">Technology</option>
+                                        <option value="culture">Culture</option>
+                                        <option value="other"> Other</option>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><label for="content" >Content</label></td>
+                                <td><textarea id="content" class="w-100"
+                                style="height: 300px; overflow: auto;"></textarea></td>
+                            </tr>
+                        </table>
+                        <div class="mt-4 float-right">
+                            <button class="btn btn-primary p-2"
+                                    onclick="addpost()">Confirm</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="comment_modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Comment On This Post
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div id="comment_body"></div>
+            </div>
+        </div>
+    </div>
+    <div id="reply_modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Reply to this comment
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div id="reply_comment_body" class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../static/css/beaware.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script>
+        $(document).ready( function(){
+            if(sessionStorage.getItem('dark').localeCompare(true) == 0){
+                toggle.checked = "true";
+                body.classList.add('dark');
+                navmenu.classList.remove('navbar-light');
+                navmenu.classList.add('navbar-dark');
+                var i;
+                for (i=0;i < cards.length;i++){
+                    console.log(i);
+                    cards[i].classList.add('dark');
+                    console.log(cards[i].classList);
+                }
+            }
+        });
+
+    </script>
+        <style>
+            .card-hover{
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 30px 0 rgba(0, 0, 0, 0.19);
+            }
+            .card{
+                max-width: 25%;
+                background-color: white;
+                transition: all ease-in-out 0.3s;
+            }
+            .card.dark:hover{
+                box-shadow: 0 0 15px rgb(169, 169, 169);
+                cursor:pointer;
+            }
+            .card-img-top{
+                margin-left: auto;
+                margin-right: auto ;
+                display:block;
+            }
+            .card:hover{
+                box-shadow: 0 0 15px rgba(33,33,33,.2);
+                cursor:pointer;
+            }
+
+            .row{
+                max-width: 80%;
+            }
+            .round {
+                border-radius: 30px;
+                padding-left: 2%;
+                padding-right: 2%;
+            }
+            a:link {
+              text-decoration: none;
+              color: black;
+            }
+
+            a:visited {
+              text-decoration: none;
+              color:black;
+            }
+
+            a:hover {
+              text-decoration: none;
+              color:black;
+            }
+
+            a:active {
+              text-decoration: none;
+              color:black;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="navbar">{% include 'website/navmenu.html' %}</div>
+
+        <div id="intro" class="row mx-auto">
+            <div class="col-4">
+                <img src="../../static/world_2.svg" class="img-responsive" style="max-width: 100%">
+            </div>
+            <div id="table_title" class="col-8 container align-self-center">
+                <br><h4 class="display-3 mx-auto">BE AWARE</h4>
+                <p class="container"> Different snapshots are taken everyday. Different stories are told everyday from different parts of
+                the world. These snapshots and stories might affect your life without you even noticing. Living in the 21st
+                century, it is really the time for you to be aware of what's happening not only in your home country, but
+                also other regions of the world </p>
+            </div>
+        </div><br><br>
+        <div id="menu" class="row card-deck mx-auto">
+            <div id="politics_card" class="card text-center" style="width:25%"><br>
+                <img class="card-img-top" src="../../static/world_politics.svg" alt="Card image" style="width:75%">
+                <div class="card-body">
+                    <a href="{% url 'website:politics' %}" class="stretched-link">
+                        <h5 class="card-title wt">Politics</h5>
+                    </a>
+                </div>
+            </div>
+            <div id="economics_card" class="card text-center" style="width:25%"><br>
+                <img class="card-img-top" src="../../static/economics.svg" alt="Card image" style="width:80%">
+                <div class="card-body">
+                    <a href="{% url 'website:economics' %}" class="stretched-link">
+                    <h5 class="card-title wt">Economics</h5>
+                    </a>
+                </div>
+            </div>
+            <div id="technology_card" class="card text-center" style="width:25%"><br>
+                <img class="card-img-top" src="../../static/tech.svg" alt="Card image" style="width:80%">
+                <div class="card-body">
+                    <a href="{% url 'website:technology' %}" class="stretched-link">
+                    <h5 class="card-title wt">Technology</h5>
+                    </a>
+                </div>
+            </div>
+            <div id="environemnt_card" class="card text-center" style="width:25%"><br>
+                <img class="card-img-top" src="../../static/environment.svg" alt="Card image" style="width:80%">
+                <div class="card-body">
+                    <a href="{% url 'website:environment' %}" class="stretched-link">
+                    <h5 class="card-title wt">Environment</h5>
+                    </a>
+                </div>
+            </div>
+            <div id="culture_card" class="card text-center" style="width:25%"><br><br>
+                <img class="card-img-top" src="../../static/creative_process_2.svg" alt="Card image" style="width:85%">
+                <div class="card-body">
+                    <a href="{% url 'website:culture' %}" class="stretched-link">
+                    <h5 class="card-title wt">Culture</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <footer id="footer" class="page-footer bg-indigo fixed-bottom padding-box">
+            <div class="toggler-container">
+                Light &nbsp;
+                <div class="toggle">
+                    <input type="checkbox" id="toggle" />
+                    <label for="toggle"></label>
+                </div>
+                &nbsp; Dark &nbsp;
+            </div>
+        </footer>
+        <script>
+            const toggle = document.getElementById('toggle');
+            const body = document.body;
+            const navmenu = document.getElementById('navmenu');
+            var cards = document.getElementsByClassName('card');
+            console.log("Hello World");
+
+            if (toggle){
+                console.log("toggle not null");
+                toggle.addEventListener('input', (e) => {
+                    const isChecked = e.target.checked;
+                    console.log(isChecked);
+                    if(isChecked) {
+                        sessionStorage.setItem('dark', true);
+                        body.classList.add('dark');
+                        navmenu.classList.remove('navbar-light');
+                        navmenu.classList.add('navbar-dark');
+                        var i;
+                        for (i=0;i < cards.length;i++){
+                            console.log(i);
+                            cards[i].classList.add('dark');
+                            console.log(cards[i].classList);
+                        }
+                    } else {
+                        sessionStorage.setItem('dark', false);
+                        body.classList.remove('dark');
+                        navmenu.classList.remove('navbar-dark');
+                        navmenu.classList.add('navbar-light');
+                        var i;
+                        for (i=0;i < cards.length;i++){
+                            cards[i].classList.remove('dark');
+                        }
+                    }
+                });
+            }else{
+                console.log("toggle is null");
+            }
+        </script>
+    </body>
+</html>

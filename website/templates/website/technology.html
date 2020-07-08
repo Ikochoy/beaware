@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Technology</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/beaware.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        .card{
+            max-width: 23%
+        }
+        .gen-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/gen_tech.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+        .ai-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/ai.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+        .robo-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/robotics.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .bd-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/big_data.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .cc-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/cloud_computing.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .iot-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/iot.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .energy-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/greentech.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .brain-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/brain.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .gene-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/biotechnology.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .space-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/space.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .nano-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/nanotech.jpeg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .synbio-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/cells.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+         .bc-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.5)), url('../../static/blockchain.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+        .specTech-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/tech_spec.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+        .articles{
+            width: 100%;
+        }
+        .news_title{
+            color: crimson;
+        }
+        table{
+            width: 100%;
+        }
+        .box{
+            height: 400px;
+            overflow-y: auto;
+        }
+        .card-text{
+            font-size: 18px;
+        }
+        .card-text.dark{
+            color:white;
+        }
+        .description{
+            color: black;
+        }
+        .description.dark{
+            color: white;
+        }
+        .card-img-top {
+            width: 100%;
+            height: 15vw;
+            object-fit: cover;
+        }
+    </style>
+    <script>
+        function ainews(){
+            var container = document.getElementById("sec_1_news");
+            container.innerHTML = document.getElementById("ainews").innerHTML;
+            document.getElementById("ronews").style.display = "none";
+            document.getElementById("bdnews").style.display = "none";
+            document.getElementById("ccnews").style.display = "none";
+        }
+
+        function robonews(){
+            var container = document.getElementById("sec_1_news");
+            container.innerHTML = document.getElementById("ronews").innerHTML;
+            document.getElementById("ainews").style.display = "none";
+            document.getElementById("bdnews").style.display = "none";
+            document.getElementById("ccnews").style.display = "none";
+        }
+
+        function bigdatanews(){
+            var container = document.getElementById("sec_1_news");
+            container.innerHTML = document.getElementById("bdnews").innerHTML;
+            document.getElementById("ainews").style.display = "none";
+            document.getElementById("ronews").style.display = "none";
+            document.getElementById("ccnews").style.display = "none";
+
+        }
+
+        function ccnews(){
+            var container = document.getElementById("sec_1_news");
+            container.innerHTML = document.getElementById("ccnews").innerHTML;
+            document.getElementById("ainews").style.display = "none";
+            document.getElementById("bdnews").style.display = "none";
+            document.getElementById("ronews").style.display = "none";
+
+        }
+
+        function iotnews(){
+            var container = document.getElementById("sec_2_news");
+            container.innerHTML = document.getElementById("iotnews").innerHTML;
+            document.getElementById("energynews").style.display = "none";
+            document.getElementById("genenews").style.display = "none";
+            document.getElementById("brainnews").style.display = "none";
+        }
+        function energynews(){
+            var container = document.getElementById("sec_2_news");
+            container.innerHTML = document.getElementById("energynews").innerHTML;
+            document.getElementById("iotnews").style.display = "none";
+            document.getElementById("genenews").style.display = "none";
+            document.getElementById("brainnews").style.display = "none";
+        }
+        function genenews(){
+            var container = document.getElementById("sec_2_news");
+            container.innerHTML = document.getElementById("genenews").innerHTML;
+            document.getElementById("energynews").style.display = "none";
+            document.getElementById("iotnews").style.display = "none";
+            document.getElementById("brainnews").style.display = "none";
+        }
+        function brainnews(){
+            var container = document.getElementById("sec_2_news");
+            container.innerHTML = document.getElementById("brainnews").innerHTML;
+            document.getElementById("energynews").style.display = "none";
+            document.getElementById("genenews").style.display = "none";
+            document.getElementById("iotnews").style.display = "none";
+        }
+        function spacenews(){
+            var container = document.getElementById("sec_3_news");
+            container.innerHTML = document.getElementById("spacenews").innerHTML;
+            document.getElementById("nanonews").style.display = "none";
+            document.getElementById("synbionews").style.display = "none";
+            document.getElementById("bcnews").style.display = "none";
+        }
+        function nanonews(){
+            var container = document.getElementById("sec_3_news");
+            container.innerHTML = document.getElementById("nanonews").innerHTML;
+            document.getElementById("spacenews").style.display = "none";
+            document.getElementById("synbionews").style.display = "none";
+            document.getElementById("bcnews").style.display = "none";
+        }
+        function synbionews(){
+            var container = document.getElementById("sec_3_news");
+            container.innerHTML = document.getElementById("synbionews").innerHTML;
+            document.getElementById("nanonews").style.display = "none";
+            document.getElementById("spacenews").style.display = "none";
+            document.getElementById("bcnews").style.display = "none";
+        }
+        function bcnews(){
+            var container = document.getElementById("sec_3_news");
+            container.innerHTML = document.getElementById("bcnews").innerHTML;
+            document.getElementById("nanonews").style.display = "none";
+            document.getElementById("synbionews").style.display = "none";
+            document.getElementById("spacenews").style.display = "none";
+        }
+        $('document').ready(function() {
+            ainews();
+            iotnews();
+            spacenews();
+        });
+
+    </script>
+    <script>
+            $(document).ready(function(){
+                if(sessionStorage.getItem('dark').localeCompare(true) == 0){
+                    toggle.checked = "true";
+                    body.classList.add('dark');
+                    for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].setAttribute("data-theme", "dark");
+                        }
+                    navmenu.classList.remove('navbar-light');
+                    navmenu.classList.add('navbar-dark');
+                    for(i=0;i<cards.length;i++){
+                        cards[i].classList.add('dark');
+                    }
+                    for(i=0;i<card_text.length;i++){
+                        card_text[i].classList.add('dark');
+                    }
+                    for(i=0;i<des.length;i++){
+                        des[i].classList.add('dark');
+                    }
+                }
+
+        });
+    </script>
+</head>
+<body>
+     <div id="navbar">
+            {% include 'website/navmenu.html' %}
+        </div>
+     <div id="general_technews">
+          <div class="gen-img text-center">
+                <div class="canada-text mx-auto wt">
+                    <br><h3>GENERAL TECHNOLOGICAL NEWS</h3><br>
+                </div>
+            </div>
+         <div>
+             <ul class="nav nav-tabs justify-content-center" id="GeneralTechNewsTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="mit-tab" data-toggle="tab" href="#mit" role="tab" aria-controls="mit"
+                  aria-selected="true">MIT Technological Review</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="theverge-tab" data-toggle="tab" href="#theverge" role="tab" aria-controls="theverge"
+                  aria-selected="false">The Verge</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="techcrunch-tab" data-toggle="tab" href="#techcrunch" role="tab" aria-controls="techcrunch"
+                   aria-selected="false">Tech Crunch</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="cnbc-tab" data-toggle="tab" href="#cnbc" role="tab" aria-controls="cnbc"
+                   aria-selected="false">CNBC</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="vice-tab" data-toggle="tab" href="#vice" role="tab" aria-controls="vice"
+                   aria-selected="false">Motherboard(Vice)</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="nat-tab" data-toggle="tab" href="#nat" role="tab" aria-controls="nat"
+                   aria-selected="false">Nature</a>
+              </li>
+            </ul><br>
+            <div class="tab-content box">
+                <div id="mit" class="tab-pane fade show active" role="tabpanel" aria-labelledby="mit-tab">
+                            <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fwww2.technologyreview.com%2Frss%2Ffeeds%2Fmainrss.aspx&num=10&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fwww2.technologyreview.com%2Frss%2Ffeeds%2Fmainrss.aspx&num=10&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+                </div>
+                <div id="theverge" role="tabpanel" aria-labelledby="theverge-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.theverge.com%2Frss%2Findex.xml&num=8&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.theverge.com%2Frss%2Findex.xml&num=8&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="techcrunch" role="tabpanel" aria-labelledby="techcrunch-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.feedburner.com%2FTechCrunch%2F&num=8&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.feedburner.com%2FTechCrunch%2F&num=8&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="cnbc" role="tabpanel" aria-labelledby="cnbc-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.cnbc.com%2Fid%2F19854910%2Fdevice%2Frss%2Frss.html&num=10&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.cnbc.com%2Fid%2F19854910%2Fdevice%2Frss%2Frss.html&num=10&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="vice" role="tabpanel" aria-labelledby="vice-tab" class="tab-pane fade">
+ <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.vice.com%2Fen_us%2Frss%2Fsection%2Ftech&num=8&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.vice.com%2Fen_us%2Frss%2Fsection%2Ftech&num=8&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="nat" role="tabpanel" aria-labelledby="nat-tab" class="tab-pane fade">
+ <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.nature.com%2Fnmat.rss&num=10&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.nature.com%2Fnmat.rss&num=10&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+
+                </div>
+            </div><br>
+         </div>
+     </div>
+         <div class="specTech-img text-center">
+                <div class="mx-auto wt">
+                    <br><h3>SPECIFIC CATEGORY</h3><br>
+                </div>
+         </div>
+         <div id="controls">
+         <div class="card-deck">
+             <div class="card btn" onclick="ainews()">
+                 <img class="card-img-top" src="../../static/ai.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">ARTIFICIAL INTELLIGENCE</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="robonews()">
+                 <img class="card-img-top" src="../../static/robotics.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">ROBOTICS</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="bigdatanews()">
+                 <img class="card-img-top" src="../../static/big_data.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">BIG DATA</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="ccnews()">
+                 <img class="card-img-top" src="../../static/cloud_computing.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">CLOUD COMPUTING</p>
+                </div>
+             </div>
+         </div><br>
+        <div id="sec_1_news" class="box"></div><br>
+        <div id="ainews" style="display:none">
+            <div class="ai-img text-center row">
+                <div class="mx-auto wt">
+                    <br><h5>ARTIFICIAL INTELLIGENCE</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                        {% for article in ainews.articles %}
+                        <tr>
+                        <td class="news_title">{{article.title}}</td>
+                        <td class="description">{{article.description}}</td>
+                        <td><a href={{article.url}}>View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fcs.AI&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+                    <noscript>
+                    <a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fcs.AI&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+                    </noscript>
+                </div>
+            </div>
+        </div>
+        <div id="ronews" style="display:none">
+               <div class="robo-img text-center row">
+                <div class="mx-auto wt">
+                    <br><h5>ROBOTICS</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                        {% for article in ronews.articles %}
+                        <tr>
+                        <td class="news_title">{{article.title}}</td>
+                        <td class="description">{{article.description}}</td>
+                        <td><a href={{article.url}}>View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fcs.RO&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fcs.RO&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div id="bdnews" style="display:none">
+               <div class="bd-img text-center row">
+                <div class="mx-auto wt">
+                    <br><h5>BIG DATA</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                        {% for article in bdnews.articles %}
+                        <tr>
+                        <td class="news_title">{{article.title}}</td>
+                        <td>{{article.description}}</td>
+                        <td class="description"><a href={{article.url}}>View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fmath.ST&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fmath.ST&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div id="ccnews" style="display:none">
+               <div class="cc-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>CLOUD COMPUTING</h5><br>
+                </div>
+            </div>
+            <table class="table" style="width: 100%;">
+                {% for article in ccnews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View</a></td>
+			    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="card-deck">
+             <div class="card btn" onclick="iotnews()">
+                 <img class="card-img-top" src="../../static/iot.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">INTERNET OF THINGS</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="energynews()">
+                 <img class="card-img-top" src="../../static/greentech.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">ENERGY</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="brainnews()">
+                 <img class="card-img-top" src="../../static/brain.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">BRAIN</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="genenews()">
+                 <img class="card-img-top" src="../../static/biotechnology.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">GENOME EDITING</p>
+                </div>
+             </div>
+         </div><br>
+        <div id="sec_2_news" class="box"></div><br>
+        <div id="iotnews" style="display:none">
+               <div class="iot-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>INTERNET OF THINGS</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                        {% for article in iotnews.articles %}
+                        <tr>
+                        <td class="news_title">{{article.title}}</td>
+                        <td class="description">{{article.description}}</td>
+                        <td><a href={{article.url}}>View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Feess.SP&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Feess.SP&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div id="energynews" style="display:none">
+               <div class="energy-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>ENERGY</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                {% for article in energynews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View</a></td>
+			    </tr>
+                {% endfor %}
+            </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.rsc.org%2Frss%2Fee&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.rsc.org%2Frss%2Fee&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div id="brainnews" style="display:none">
+            <div class="brain-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>BRAIN</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                {% for article in brainnews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View</a></td>
+			    </tr>
+                {% endfor %}
+            </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fq-bio.NC&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fq-bio.NC&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+
+        </div>
+        <div id="genenews" style="display:none">
+               <div class="gene-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>GENOME EDITING</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                        {% for article in genenews.articles %}
+                        <tr>
+                        <td class="news_title">{{article.title}}</td>
+                        <td class="description">{{article.description}}</td>
+                        <td><a href={{article.url}}>View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fq-bio.GN&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fq-bio.GN&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-deck">
+             <div class="card btn" onclick="spacenews()">
+                 <img class="card-img-top" src="../../static/space.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">SPACE</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="nanonews()">
+                 <img class="card-img-top" src="../../static/nanotech.jpeg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">NANOTECHNOLOGY</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="synbionews()">
+                 <img class="card-img-top" src="../../static/cells.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">SYNTHETIC BIOLOGY</p>
+                </div>
+             </div>
+             <div class="card btn" onclick="bcnews()">
+                 <img class="card-img-top" src="../../static/blockchain.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">BLOCKCHAIN</p>
+                </div>
+             </div>
+
+         </div><br>
+        <div id="sec_3_news" class="box"></div><br>
+        <div id="spacenews" style="display:none">
+               <div class="space-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>SPACE</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                        {% for article in spacenews.articles %}
+                        <tr>
+                        <td class="news_title">{{article.title}}</td>
+                        <td class="description">{{article.description}}</td>
+                        <td><a href={{article.url}}>View</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fastro-ph&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fastro-ph&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div id="nanonews" style="display:none">
+               <div class="nano-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>NANOTECHNOLOGY</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    <table class="table" style="width: 100%;">
+                {% for article in nanonews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View</a></td>
+			    </tr>
+                {% endfor %}
+            </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fcond-mat.mes-hall&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fexport.arxiv.org%2Frss%2Fcond-mat.mes-hall&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div id="synbionews" style="display:none">
+               <div class="synbio-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>SYNTHETIC BIOLOGY</h5><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9">
+                     <table class="table" style="width: 100%;">
+                {% for article in synbionews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View</a></td>
+			    </tr>
+                {% endfor %}
+            </table>
+                </div>
+                <div class="col-3">
+                    Recent publications <br>
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.nature.com%2Fsubjects%2Fsynthetic-biology.rss&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.nature.com%2Fsubjects%2Fsynthetic-biology.rss&num=10&desc=20&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+        </div>
+        <div id="bcnews" style="display:none">
+               <div class="bc-img text-center">
+                <div class="mx-auto wt">
+                    <br><h5>BLOCKCHAIN TECHNOLOGY</h5><br>
+                </div>
+            </div>
+            <table class="table" style="width: 100%;">
+                {% for article in bcnews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View</a></td>
+			    </tr>
+                {% endfor %}
+            </table>
+        </div>
+     </div>
+         <div id="tweets" class="card-deck">
+             <div class="card scroll overflow-auto">
+                 <a class="twitter-timeline" href="https://twitter.com/scrawford?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                 Tweets by Susan Crawford</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+             </div>
+             <div class="card scroll overflow-auto">
+                 <a class="twitter-timeline" href="https://twitter.com/chrismessina?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                 Tweets by chrismessina</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+             </div>
+             <div class="card scroll overflow-auto">
+                 <a class="twitter-timeline" href="https://twitter.com/thenextweb?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                 Tweets by thenextweb</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+             </div>
+              <div class="card scroll overflow-auto">
+                 <a class="twitter-timeline" href="https://twitter.com/technology?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                     Tweets by Bloomberg </a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+             </div>
+              <div class="card scroll overflow-auto">
+                 <a class="twitter-timeline" href="https://twitter.com/engadget?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                     Tweets by engadget</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+             </div>
+
+         </div><br><br>
+        <footer id="footer" class="page-footer bg-indigo fixed-bottom">
+            <div class="toggler-container">
+                Light &nbsp;
+                <div class="toggle">
+                    <input type="checkbox" id="toggle" />
+                    <label for="toggle"></label>
+                </div>
+                &nbsp; Dark &nbsp;
+            </div>
+        </footer>
+        <script>
+            const toggle = document.getElementById('toggle');
+            const body = document.body;
+            const navmenu = document.getElementById('navmenu');
+            var cards = document.getElementsByClassName('card')
+            var card_text = document.getElementsByClassName('card-text');
+            var des = document.getElementsByClassName('description');
+            var twitter_timeline = document.getElementsByClassName('twitter-timeline');
+            if (toggle){
+                console.log("toggle not null");
+                toggle.addEventListener('input', (e) => {
+                    const isChecked = e.target.checked;
+                    if(isChecked) {
+                        sessionStorage.setItem('dark', true);
+                        var i;
+                        for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].setAttribute("data-theme", "dark");
+                        }
+                        navmenu.classList.remove('navbar-light');
+                        navmenu.classList.add('navbar-dark');
+                        for(i=0;i<cards.length;i++){
+                            cards[i].classList.add('dark');
+                        }
+                        for(i=0;i<card_text.length;i++){
+                            card_text[i].classList.add('dark');
+                        }
+                        for(i=0;i<des.length;i++){
+                            des[i].classList.add('dark');
+                        }
+                        location.reload();
+                        body.classList.add('dark');
+
+
+                    } else {
+                        sessionStorage.setItem('dark', false);
+                        for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].removeAttribute("data-theme", "light");
+
+                        }
+                        navmenu.classList.remove('navbar-dark');
+                        navmenu.classList.add('navbar-light');
+                        for(i=0;i<cards.length;i++){
+                            cards[i].classList.remove('dark');
+                        }
+                        for(i=0;i<card_text.length;i++){
+                            card_text[i].classList.remove('dark');
+                        }
+                        for(i=0;i<des.length;i++){
+                            des[i].classList.remove('dark');
+                        }
+                        location.reload();
+                        body.classList.remove('dark');
+                    }
+                });
+            }else{
+                console.log("toggle is null");
+            }
+        </script>
+
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../static/css/beaware.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="//rss.bloople.net/?url=https%3A%2F%2Frss.cbc.ca%2Flineup%2Fpolitics.xml&showtitle=false&type=js"></script>
+        <style>
+            .card{
+                max-width: 25%;
+            }
+            body{
+                font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+                font-size: 20px;
+            }
+            img{
+                max-width: 300px;
+            }
+            .news{
+                width: 100%;
+            }
+            .news_title{
+                 color: crimson;
+            }
+            table{
+                width: 100%;
+            }
+            td{
+                text-align: center;
+            }
+            .wt{
+                color: white;
+            }
+             a {
+                color: #1E90FF;
+                text-decoration: none;
+             }
+            .canada-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../static/ca.jpg");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+            .taiwan-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/tw.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+            .hongkong-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/hk2.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+            .us-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../static/ny.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+            .sg-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/sg.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+            .uk-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/london.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+            }
+             .bg-indigo{
+                background-color: #4751D4;
+                color: white;
+            }
+
+        </style>
+        <script>
+            $(document).ready(function(){
+                if(sessionStorage.getItem('dark').localeCompare(true) == 0){
+                    toggle.checked = "true";
+                    body.classList.add('dark');
+                    navmenu.classList.remove('navbar-light');
+                    navmenu.classList.add('navbar-dark');
+                    for (i=0; i <twitter_timeline.length; i++){
+                           twitter_timeline[i].setAttribute("data-theme", "dark");
+                    }
+                }
+        });
+        </script>
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous"
+                src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0"></script>
+        <div id="navbar">
+            {% include 'website/navmenu.html' %}
+        </div>
+        <!--Canada-->
+        <div id="Canada">
+            <div class="canada-img text-center">
+                <div class="canada-text mx-auto wt">
+                    <br><h1>CANADA</h1><br>
+                    <h3>Top 5 Political headlines of Canada</h3><br>
+                </div>
+            </div>
+            <ul class="nav nav-tabs justify-content-center" id="CATab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="CBC-tab" data-toggle="tab" href="#CBC" role="tab" aria-controls="CBC"
+                  aria-selected="true">CBC</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="Mc-tab" data-toggle="tab" href="#Maclean" role="tab" aria-controls="Maclean"
+                  aria-selected="false">Maclean's</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="ctv-tab" data-toggle="tab" href="#ctv" role="tab" aria-controls="ctv"
+                   aria-selected="false">CTV News</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="cagov-tab" data-toggle="tab" href="#cagov" role="tab" aria-controls="cagov"
+                   aria-selected="false">Canada Open Government Blogs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id=pm-tab" data-toggle="tab" href="#pm" role="tab" aria-controls="pm"
+                   aria-selected="false">Prime Minster</a>
+              </li>
+            </ul><br>
+            <div class="tab-content">
+                <div id="CBC" class="tab-pane fade show active" role="tabpanel" aria-labelledby="CBC-tab">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Frss.cbc.ca%2Flineup%2Fpolitics.xml&num=5&desc=1&date=y&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;  	font-family: Futura, 'Trebuchet MS', Arial, sans-serif;  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+                    <noscript>
+                    <a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Frss.cbc.ca%2Flineup%2Fpolitics.xml&num=5&desc=1&date=y&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;  	font-family: Futura, 'Trebuchet MS', Arial, sans-serif;  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+                    </noscript>
+                </div>
+                <div id="Maclean" role="tabpanel" aria-labelledby="Mc-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.macleans.ca%2Fpolitics%2Ffeed%2F&num=5&desc=250&date=y&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;  	font-family: Futura, "  charset="UTF-8" type="text/javascript"></script>
+                    <noscript>
+                    <a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.macleans.ca%2Fpolitics%2Ffeed%2F&num=5&desc=250&date=y&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;  	font-family: Futura, &html=y">View RSS feed</a>
+                    </noscript>
+                </div>
+                <div id="ctv" role="tabpanel" aria-labelledby="ctv-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.ctvnews.ca%2Frss%2Fctvnews-ca-politics-public-rss-1.822302&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+                    <noscript>
+                    <a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.ctvnews.ca%2Frss%2Fctvnews-ca-politics-public-rss-1.822302&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+                    </noscript>
+                </div>
+                <div id="cagov" role="tabpanel" aria-labelledby="cagov-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fopen.canada.ca%2Fen%2Fblog%2Ffeed&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+                    <noscript>
+                    <a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fopen.canada.ca%2Fen%2Fblog%2Ffeed&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+                    </noscript>
+                </div>
+                <div id="pm" role="tabpanel" aria-labelledby="pm-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fpm.gc.ca%2Fen%2Fnews.rss&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+                    <noscript>
+                    <a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fpm.gc.ca%2Fen%2Fnews.rss&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+                    </noscript>
+
+                </div>
+            </div>
+
+            <div class="card-deck">
+                 <!--Tweets by CBC Politics-->
+            <div class="card scroll overflow-auto">
+                <a class="twitter-timeline" href="https://twitter.com/CBCPolitics?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                Tweets by CBCPolitics</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            <div class="card scroll overflow-auto">
+                 <!--Tweets by Justin Trudeau-->
+                <a class="twitter-timeline" href="https://twitter.com/JustinTrudeau?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                Tweets by JustinTrudeau</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            <div class="card scroll overflow-auto">
+                <!--Tweets by Chrystia Freeland-->
+                <a class="twitter-timeline" href="https://twitter.com/cafreeland?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                    Tweets by cafreeland</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+           </div>
+           <div class="card scroll overflow-auto">
+            <!--Tweets by Jagmeet Singh-->
+            <a class="twitter-timeline" href="https://twitter.com/theJagmeetSingh?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                Tweets by theJagmeetSingh</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div>
+          <div class="card scroll overflow-auto">
+            <!--Tweets by Andrew Scheer-->
+            <a class="twitter-timeline" href="https://twitter.com/AndrewScheer?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                Tweets by AndrewScheer</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+         </div>
+        </div><br>
+
+        <!--Taiwan-->
+        <div id="Taiwan">
+            <div class="taiwan-img">
+                <div class="taiwan-text mx-auto wt text-center">
+                    <br><h1>TAIWAN</h1><br>
+                    <h3>Top 5 Political headlines of Taiwan</h3><br>
+                </div>
+            </div>
+            <ul class="nav nav-tabs justify-content-center" id="TWTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="ZY-tab" data-toggle="tab" href="#zy" role="tab" aria-controls="zy"
+                  aria-selected="true">自由時報</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="HS-tab" data-toggle="tab" href="#hs" role="tab" aria-controls="hs"
+                  aria-selected="false">華視新聞</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="ac-tab" data-toggle="tab" href="#ac" role="tab" aria-controls="ac"
+                   aria-selected="false">行政院新聞</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="twp-tab" data-toggle="tab" href="#twp" role="tab" aria-controls="twp"
+                   aria-selected="false">中華民國總統府公報</a>
+              </li>
+            </ul><br>
+            <div class="tab-content">
+                <div id="zy" class="tab-pane fade show active" role="tabpanel" aria-labelledby="ZY-tab">
+                        <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fnews.ltn.com.tw%2Frss%2Fpolitics.xml&num=5&desc=400&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fnews.ltn.com.tw%2Frss%2Fpolitics.xml&num=5&desc=400&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="hs" role="tabpanel" aria-labelledby="HS-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fnews.cts.com.tw%2Frss%2Fpolitics.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fnews.cts.com.tw%2Frss%2Fpolitics.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="ac" role="tabpanel" aria-labelledby="ac-tab" class="tab-pane fade">
+       <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.ey.gov.tw%2FRSS_Content.aspx%3FModuleType%3D3&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.ey.gov.tw%2FRSS_Content.aspx%3FModuleType%3D3&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="twp" role="tabpanel" aria-labelledby="twp-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.president.gov.tw%2FRSSGazette.aspx&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.president.gov.tw%2FRSSGazette.aspx&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+            </div>
+
+            <div class="card-deck">
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by Tsai Ing Wen -->
+                    <a class="twitter-timeline" href="https://twitter.com/iingwen?ref_src=twsrc%5Etfw"data-height="400" data-chrome="nofooter">
+                        Tweets by iingwen</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by Su Zhen Chang -->
+                    <a class="twitter-timeline" href="https://twitter.com/eballgogogo?ref_src=twsrc%5Etfw"data-height="400" data-chrome="nofooter">
+                        Tweets by eballgogogo (蘇貞昌)</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+
+                <!-- Tweets by jiang wan an -->
+                <div class="fb-page card scroll overflow-auto" data-href="https://www.facebook.com/pg/chiangwanan/posts/?ref=page_internal" data-tabs="timeline" data-width=""
+                     data-height="400" data-adapt-container-width="true" data-show-facepile="true" data-small-header="true" data-hide-cover="true">
+                    <blockquote cite="https://www.facebook.com/pg/chiangwanan/posts/?ref=page_internal" class="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/pg/chiangwanan/posts/?ref=page_internal">蔣萬安</a></blockquote></div>
+
+                <!-- Tweets by zhu li lun -->
+                <div class="fb-page card scroll overflow-auto" data-href="https://www.facebook.com/pg/llchu/posts/?ref=page_internal"
+                     data-tabs="timeline" data-width="" data-height="400" data-adapt-container-width="true"
+                    data-show-facepile="true" data-small-header="true" data-hide-cover="true"><blockquote cite="https://www.facebook.com/pg/llchu/posts/?ref=page_internal" class="fb-xfbml-parse-ignore">
+                    <a href="https://www.facebook.com/pg/llchu/posts/?ref=page_internal">朱立倫</a></blockquote></div>
+
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by ke P -->
+                    <a class="twitter-timeline" href="https://twitter.com/KP_Taipei?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by KP_Taipei</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+
+        </div><br>
+        <!--HK-->
+        <div id="HongKong">
+            <div class="hongkong-img">
+                <div class="hongkong-text mx-auto wt text-center">
+                    <br><h1>HONG KONG</h1><br>
+                    <h3>Top 5 headlines of hong kong</h3><br>
+                </div>
+            </div>
+            <ul class="nav nav-tabs justify-content-center" id="HKTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="LC-tab" data-toggle="tab" href="#lc" role="tab" aria-controls="lc"
+                  aria-selected="true">立場新聞</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="HKFP-tab" data-toggle="tab" href="#hkfp" role="tab" aria-controls="hkfp"
+                  aria-selected="false">Hong Kong Free Press</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="now-tab" data-toggle="tab" href="#mp" role="tab" aria-controls="mp"
+                   aria-selected="false">明報</a>
+              <li class="nav-item">
+                <a class="nav-link" id="gis-tab" data-toggle="tab" href="#gis" role="tab" aria-controls="gis"
+                   aria-selected="false">政府新聞處</a>
+              </li>
+            </ul><br>
+            <div class="tab-content">
+                <div id="lc" class="tab-pane fade show active" role="tabpanel" aria-labelledby="LC-tab">
+                       <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.thestandnews.com%2Fpolitics%2Frss%2F&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.thestandnews.com%2Fpolitics%2Frss%2F&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+
+                </div>
+                <div id="hkfp" role="tabpanel" aria-labelledby="HS-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.hongkongfp.com%2Ffeed%2F&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.hongkongfp.com%2Ffeed%2F&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+
+                </div>
+                <div id="mp" role="tabpanel" aria-labelledby="ac-tab" class="tab-pane fade">
+       <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.ey.gov.tw%2FRSS_Content.aspx%3FModuleType%3D3&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.ey.gov.tw%2FRSS_Content.aspx%3FModuleType%3D3&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="gis" role="tabpanel" aria-labelledby="twp-tab" class="tab-pane fade">
+                   <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.news.gov.hk%2Ftc%2Fcommon%2Fhtml%2Ftopstories.rss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.news.gov.hk%2Ftc%2Fcommon%2Fhtml%2Ftopstories.rss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+                </div>
+            </div>
+
+            <div class="card-deck">
+                <!-- facebook by starry lee -->
+                <div class="fb-page card scroll overflow-auto" data-href="https://www.facebook.com/pg/LeeWaiKingStarry/posts/?ref=page_internal" data-tabs="timeline" data-width="" data-height="400"
+                      data-adapt-container-width="true" data-show-facepile="true" data-small-header="true" data-hide-cover="true">
+                    <blockquote cite="https://www.facebook.com/pg/LeeWaiKingStarry/posts/?ref=page_internal" class="fb-xfbml-parse-ignore">
+                        a href="https://www.facebook.com/pg/LeeWaiKingStarry/posts/?ref=page_internal">李慧琼 Starry Lee</a></blockquote></div>
+
+                <!-- Facebook by felix chung -->
+                <div class="fb-page card scroll overflow-auto" data-href="https://www.facebook.com/pg/felixchungkwokpan/posts/?ref=page_internal" data-tabs="timeline" data-width=""
+                     data-width="" data-height="400" data-adapt-container-width="true"
+                     data-show-facepile="true" data-small-header="true" data-hide-cover="true"><blockquote cite="https://www.facebook.com/pg/felixchungkwokpan/posts/?ref=page_internal"
+                                                           class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/pg/felixchungkwokpan/posts/?ref=page_internal">
+                    鍾國斌 Felix Chung</a></blockquote></div>
+
+                <!-- Facebook by Michael Tien -->
+                <div class="fb-page card scroll overflow-auto" data-href="https://www.facebook.com/pg/tien.michael/posts/?ref=page_internal" data-tabs="timeline" data-width=""
+                     data-height="400"  data-adapt-container-width="true"
+                     data-show-facepile="true" data-small-header="true" data-hide-cover="true"><blockquote cite="https://www.facebook.com/pg/tien.michael/posts/?ref=page_internal"
+                                                           class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/pg/tien.michael/posts/?ref=page_internal">
+                    田北辰 Michael Tien</a></blockquote></div>
+
+                <!-- Facebook by Tanya Chan -->
+                <div class="fb-page card scroll overflow-auto" data-href="https://www.facebook.com/pg/tanyachancp/posts/?ref=page_internal" data-tabs="timeline" data-width=""
+                 data-height="400"  data-adapt-container-width="true"
+                 data-show-facepile="true" data-small-header="true" data-hide-cover="true"><blockquote cite="https://www.facebook.com/pg/tanyachancp/posts/?ref=page_internal"
+                class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/pg/tanyachancp/posts/?ref=page_internal">Tanya CHAN 陳淑莊</a></blockquote></div>
+
+                <div class="card scroll overflow-auto">
+                <!-- Tweets by Joshua Wong -->
+                <a class="twitter-timeline" href="https://twitter.com/joshuawongcf?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                    Tweets by joshuawongcf</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            </div>
+        </div><br>
+        <!--UK-->
+        <!--US-->
+        <div id="US">
+            <div class="us-img">
+                <div class="us-text mx-auto wt text-center">
+                    <br><h1>UNITED STATES</h1><br>
+                    <h3>Top 5 headlines of United States</h3><br>
+                </div>
+            </div>
+              <ul class="nav nav-tabs justify-content-center" id="USTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="NYT-tab" data-toggle="tab" href="#nyt" role="tab" aria-controls="nyt"
+                  aria-selected="true">New York Times</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="RT-tab" data-toggle="tab" href="#reuters" role="tab" aria-controls="reuters"
+                  aria-selected="false">Reuters</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="FN-tab" data-toggle="tab" href="#fn" role="tab" aria-controls="fn"
+                   aria-selected="false">Fox News</a>
+              <li class="nav-item">
+                <a class="nav-link" id="CNN-tab" data-toggle="tab" href="#cnn" role="tab" aria-controls="cnn"
+                   aria-selected="false">CNN Politics</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="WH-tab" data-toggle="tab" href="#wh" role="tab" aria-controls="wh"
+                   aria-selected="false">State Government Press Release</a>
+              </li>
+            </ul><br>
+            <div class="tab-content">
+                <div id="nyt" class="tab-pane fade show active" role="tabpanel" aria-labelledby="NYT-tab">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Frss.nytimes.com%2Fservices%2Fxml%2Frss%2Fnyt%2FPolitics.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Frss.nytimes.com%2Fservices%2Fxml%2Frss%2Fnyt%2FPolitics.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+                </div>
+                <div id="reuters" role="tabpanel" aria-labelledby="RT-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.reuters.com%2FReuters%2FPoliticsNews&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.reuters.com%2FReuters%2FPoliticsNews&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+                </div>
+                <div id="fn" role="tabpanel" aria-labelledby="FN-tab" class="tab-pane fade">
+                    <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Fpolitics&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.foxnews.com%2Ffoxnews%2Fpolitics&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="cnn" role="tabpanel" aria-labelledby="CNN-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Frss.cnn.com%2Frss%2Fcnn_allpolitics.rss&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Frss.cnn.com%2Frss%2Fcnn_allpolitics.rss&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="wh" role="tabpanel" aria-labelledby="WH-tab" class="tab-pane fade">
+                <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.state.gov%2Frss-feed%2Fpress-releases%2Ffeed%2F&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>\
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.state.gov%2Frss-feed%2Fpress-releases%2Ffeed%2F&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+                </div>
+            </div>
+            <div class="card-deck">
+                <div class="card">
+                    <!--Tweets by CNN Politics-->
+                    <a class="twitter-timeline" href="https://twitter.com/CNNPolitics?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                    Tweets by CNNPolitics</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                     <!--Tweets by Donald Trump-->
+                    <a class="twitter-timeline" href="https://twitter.com/realDonaldTrump?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                    Tweets by realDonaldTrump</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!--Tweets by Mike Pence-->
+                    <a class="twitter-timeline" href="https://twitter.com/Mike_Pence?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                    Tweets by Mike_Pence</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                     <!--Tweets by Pompeo-->
+                    <a class="twitter-timeline" href="https://twitter.com/SecPompeo?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                    Tweets by SecPompeo</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!--Tweets by Nancy Pelosi-->
+                    <a class="twitter-timeline" href="https://twitter.com/SpeakerPelosi?ref_src=twsrc%5Etfw"data-height="400" data-chrome="nofooter">
+                        Tweets by SpeakerPelosi</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div><br>
+        <div id="SG">
+            <div class="sg-img">
+                <div class="mx-auto wt text-center">
+                    <br><h1>Singapore</h1><br>
+                    <h3>Top 5 headlines of Singapore</h3><br>
+                </div>
+            </div>
+            <ul class="nav nav-tabs justify-content-center" id="SGTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="ST-tab" data-toggle="tab" href="#st" role="tab" aria-controls="st"
+                  aria-selected="true">The Strait Times</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="BT-tab" data-toggle="tab" href="#bt" role="tab" aria-controls="bt"
+                  aria-selected="false">The Business Times</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="CNA-tab" data-toggle="tab" href="#cna" role="tab" aria-controls="cna"
+                   aria-selected="false">CNA</a>
+            </ul><br>
+            <div class="tab-content">
+                <div id="st" class="tab-pane fade show active" role="tabpanel" aria-labelledby="ST-tab">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.straitstimes.com%2Fnews%2Fsingapore%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.straitstimes.com%2Fnews%2Fsingapore%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="bt" role="tabpanel" aria-labelledby="BT-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.businesstimes.com.sg%2Frss%2Fgovernment-economy&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.businesstimes.com.sg%2Frss%2Fgovernment-economy&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+
+                </div>
+                <div id="cna" role="tabpanel" aria-labelledby="CNA-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.channelnewsasia.com%2Frssfeeds%2F8396082&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.channelnewsasia.com%2Frssfeeds%2F8396082&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+                </div>
+            </div>
+            <div class="card-deck">
+                <div class="card">
+                    <!--Tweets by SG Gov-->
+                   <a class="twitter-timeline" href="https://twitter.com/govsingapore?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                       Tweets by govSingapore</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                     <!--Tweets by Lee Hsien loong-->
+                    <a class="twitter-timeline" href="https://twitter.com/leehsienloong?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by leehsienloong</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!--Tweets by PAP-->
+                    <a class="twitter-timeline" href="https://twitter.com/PAPSingapore?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by People's Action Party</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                     <!--Tweets by Worker's Party-->
+                    <a class="twitter-timeline" href="https://twitter.com/wpsg?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by Worker's Party</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!--Tweets by Singapore Democratic Party-->
+                   <a class="twitter-timeline" href="https://twitter.com/yourSDP?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                       Tweets by Singapore Democratic Party</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div><br>
+
+        <div id="UK">
+            <div class="uk-img">
+                <div class="mx-auto wt text-center">
+                    <br><h1>The United Kingdom</h1><br>
+                    <h3>Top 5 headlines of The United Kingdom</h3><br>
+                </div>
+            </div>
+            <ul class="nav nav-tabs justify-content-center" id="UKTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="BBC-tab" data-toggle="tab" href="#bbc" role="tab" aria-controls="bbc"
+                  aria-selected="true">BBC Politics</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="GD-tab" data-toggle="tab" href="#gd" role="tab" aria-controls="gd"
+                  aria-selected="false">Guardian</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="TG-tab" data-toggle="tab" href="#tg" role="tab" aria-controls="tg"
+                   aria-selected="false">Telegraph</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="UKP-tab" data-toggle="tab" href="#ukp" role="tab" aria-controls="ukp"
+                   aria-selected="false">UK Parliament</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pmuk-tab" data-toggle="tab" href="#pmuk" role="tab" aria-controls="pmuk"
+                   aria-selected="false">Prime Minster's Office</a>
+              </li>
+            </ul><br>
+            <div class="tab-content">
+                <div id="bbc" class="tab-pane fade show active" role="tabpanel" aria-labelledby="BBC-tab">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.bbci.co.uk%2Fnews%2Fpolitics%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.bbci.co.uk%2Fnews%2Fpolitics%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="gd" role="tabpanel" aria-labelledby="GD-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Ffeeds.theguardian.com%2Ftheguardian%2Fpolitics%2Frss&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Ffeeds.theguardian.com%2Ftheguardian%2Fpolitics%2Frss&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+
+                </div>
+                <div id="tg" role="tabpanel" aria-labelledby="TG-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.telegraph.co.uk%2Fnews%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.telegraph.co.uk%2Fnews%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                <div id="ukp" role="tabpanel" aria-labelledby="UKP-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.parliament.uk%2Fg%2FRSS%2Fnews-feed%2F%3FpageInstanceId%3D209%26limit%3D20&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.parliament.uk%2Fg%2FRSS%2Fnews-feed%2F%3FpageInstanceId%3D209%26limit%3D20&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+                </div>
+                 <div id="pmuk" role="tabpanel" aria-labelledby="pmuk-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fwww.govwire.co.uk%2Frss%2Fprime-ministers-office-10-downing-street&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fwww.govwire.co.uk%2Frss%2Fprime-ministers-office-10-downing-street&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+                </div>
+            </div>
+            <div class="card-deck">
+                <div class="card">
+                    <!--Tweets by 10 downing street-->
+                   <a class="twitter-timeline" href="https://twitter.com/10DowningStreet?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                       Tweets by 10DowningStreet</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                     <!--Tweets by Parliament-->
+                    <a class="twitter-timeline" href="https://twitter.com/UKParliament?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by UKParliament</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!--Tweets by Boris Johnson-->
+                   <a class="twitter-timeline" href="https://twitter.com/BorisJohnson?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                       Tweets by BorisJohnson</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                     <!--Tweets by Labour Party-->
+                    <a class="twitter-timeline" href="https://twitter.com/UKLabour?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by UKLabour</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!--Tweets by Singapore Democratic Party-->
+                   <a class="twitter-timeline" href="https://twitter.com/Conservatives?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                       Tweets by Conservatives</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div><br><br>
+
+        <footer id="footer" class="page-footer bg-indigo fixed-bottom">
+            <div class="toggler-container">
+                Light &nbsp;
+                <div class="toggle">
+                    <input type="checkbox" id="toggle" />
+                    <label for="toggle"></label>
+                </div>
+                &nbsp; Dark &nbsp;
+            </div>
+        </footer>
+
+        <script>
+            const toggle = document.getElementById('toggle');
+            const body = document.body;
+            const navmenu = document.getElementById('navmenu');
+            var twitter_timeline = document.getElementsByClassName('twitter-timeline');
+            if (toggle){
+                console.log("toggle not null");
+                toggle.addEventListener('input', (e) => {
+                    const isChecked = e.target.checked;
+                    if(isChecked) {
+                        sessionStorage.setItem('dark', true);
+                        navmenu.classList.remove('navbar-light');
+                        navmenu.classList.add('navbar-dark');
+                        var i;
+                        for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].setAttribute("data-theme", "dark");
+                        }
+                        body.classList.add('dark');
+                        location.reload();
+
+
+                    } else {
+                        sessionStorage.setItem('dark', false);
+                        navmenu.classList.remove('navbar-dark');
+                        navmenu.classList.add('navbar-light');
+                        for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].removeAttribute("data-theme", "light");
+
+                        }
+                        body.classList.remove('dark');
+                        location.reload();
+                    }
+                });
+            }else{
+                console.log("toggle is null");
+            }
+        </script>
+
+    </body>
+</html>

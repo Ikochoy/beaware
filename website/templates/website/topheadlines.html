@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Headlines</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/beaware.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script>
+        $(document).ready( function(){
+            if(sessionStorage.getItem('dark').localeCompare(true) == 0){
+                toggle.checked = "true";
+                body.classList.add('dark');
+                navmenu.classList.remove('navbar-light');
+                navmenu.classList.add('navbar-dark');
+                var i;
+                for (i=0;i<des.length; i++){
+                    des[i].classList.add('dark');
+                }
+                for(i=0;i<countryTab.length; i++){
+                    countryTab[i].classList.add('dark');
+                }
+
+            }
+        });
+
+    </script>
+    <style>
+        .articles{
+            width: 100%;
+        }
+        .news_title{
+             color: crimson;
+        }
+        table{
+            width: 100%;
+        }
+        .description.dark{
+            color: white;
+        }
+        .description {
+            color: black;
+        }
+
+        .wt{
+            color: gray;
+        }
+
+        .wt.dark{
+            color: silver;
+        }
+        a {
+            color: #1E90FF;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+            <nav id="navmenu" class="navbar navbar-expand-sm justify-content-center navbar-light">
+                {% include 'website/navmenu.html' %}
+            </nav>
+        </div>
+    <div id="intro" class="text-center">
+        <h4 class="display-4"> Top Headlines Around The World</h4><br>
+         <img src="../../static/news.svg" style="max-width: 15%">
+    </div><br>
+    <ul class="nav nav-tabs container justify-content-center navbar-light" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link wt active" id="us-tab" data-toggle="tab" href="#us" role="tab" aria-controls="us"
+              aria-selected="true">The US</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link wt" id="hk-tab" data-toggle="tab" href="#hk" role="tab" aria-controls="hk"
+              aria-selected="false">Hong Kong</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link wt" id="tw-tab" data-toggle="tab" href="#tw" role="tab" aria-controls="tw"
+              aria-selected="false">Taiwan</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link wt" id="ca-tab" data-toggle="tab" href="#ca" role="tab" aria-controls="ca"
+              aria-selected="false">Canada</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link wt" id="uk-tab" data-toggle="tab" href="#uk" role="tab" aria-controls="uk"
+              aria-selected="false">The UK</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link wt" id="cn-tab" data-toggle="tab" href="#cn" role="tab" aria-controls="cn"
+              aria-selected="false">China</a>
+          </li>
+    </ul>
+    <div class="tab-content container" id="myTabContent">
+      <div class="tab-pane fade show active" id="us" role="tabpanel" aria-labelledby="us-tab">
+            <div class="articlesus">
+                <table class="table" style="width: 100%;">
+                {% for article in usnews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View Whole Article</a></td>
+			    </tr>
+                {% endfor %}
+                </table>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="hk" role="tabpanel" aria-labelledby="hk-tab">
+          <div class="articleshk">
+                <table class="table" style="width: 100%;">
+                {% for article in hknews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View Whole Article</a></td>
+			    </tr>
+                {% endfor %}
+                </table>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="tw" role="tabpanel" aria-labelledby="tw-tab">
+          <div class="articles_tw">
+                <table class="table" style="width: 100%;">
+                {% for article in twnews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View Whole Article</a></td>
+			    </tr>
+                {% endfor %}
+                </table>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="ca" role="tabpanel" aria-labelledby="ca-tab">
+          <div class="articlesca">
+                <table class="table" style="width: 100%;">
+                {% for article in canews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View Whole Article</a></td>
+			    </tr>
+                {% endfor %}
+                </table>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="uk" role="tabpanel" aria-labelledby="uk-tab">
+          <div class="articlesuk">
+                <table class="table" style="width: 100%;">
+                {% for article in gbnews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View Whole Article</a></td>
+			    </tr>
+                {% endfor %}
+                </table>
+            </div><br>
+      </div>
+      <div class="tab-pane fade" id="cn" role="tabpanel" aria-labelledby="cn-tab">
+          <div class="articlescn">
+                <table class="table" style="width: 100%;">
+                {% for article in cnnews.articles %}
+                <tr>
+			    <td class="news_title">{{article.title}}</td>
+			    <td class="description">{{article.description}}</td>
+			    <td><a href={{article.url}}>View Whole Article</a></td>
+			    </tr>
+                {% endfor %}
+                </table>
+            </div><br>
+      </div>
+    </div><br><br><br>
+    <footer id="footer" class="page-footer bg-indigo fixed-bottom">
+         <div class="toggler-container">
+                Light &nbsp;
+                <div class="toggle">
+                    <input type="checkbox" id="toggle" />
+                    <label for="toggle"></label>
+                </div>
+                &nbsp; Dark &nbsp;
+            </div>
+    </footer>
+    <script>
+            const toggle = document.getElementById('toggle');
+            const body = document.body;
+            const navmenu = document.getElementById('navmenu');
+            var des = document.getElementsByClassName('description');
+            const countryTab = document.getElementsByClassName('wt');
+            if (toggle){
+                console.log("toggle not null");
+                toggle.addEventListener('input', (e) => {
+                    const isChecked = e.target.checked;
+                    if(isChecked) {
+                        sessionStorage.setItem('dark', true);
+                        body.classList.add('dark');
+                        navmenu.classList.remove('navbar-light');
+                        navmenu.classList.add('navbar-dark');
+                        var i;
+                        for (i=0;i<des.length; i++){
+                            des[i].classList.add('dark');
+                        }
+                        for(i=0;i<countryTab.length; i++){
+                            countryTab[i].classList.add('dark');
+                        }
+
+
+                    } else {
+                        sessionStorage.setItem('dark', false);
+                        body.classList.remove('dark');
+                        navmenu.classList.remove('navbar-dark');
+                        navmenu.classList.add('navbar-light');
+                        for (i=0;i<des.length; i++){
+                            des[i].classList.remove('dark');
+                        }
+                        for(i=0;i<countryTab.length; i++){
+                            countryTab[i].classList.remove('dark');
+                        }
+
+                    }
+                    console.log(sessionStorage.getItem('dark'));
+                });
+            }else{
+                console.log("toggle is null");
+            }
+        </script>
+</body>
+</html>

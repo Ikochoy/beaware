@@ -1,0 +1,24 @@
+{% if post %}
+    <div class="modal-body">
+        <textarea id="comment_text" rows="7" cols="40"></textarea>
+        <div class="float-right py-3">
+            <button class="btn btn-primary" onclick="addcomment('{{post.pk}}')">Enter</button>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    function addcomment(post_id){
+        $.ajax({
+            url: "{% url 'website:add_comment' %}",
+            data: {
+                'post_id': post_id,
+                'member_id': "{{user.member.pk}}",
+                'text': $('#comment_text').val()
+            },
+            success: function(data){
+                window.location.reload()
+            }
+        });
+    }
+</script>

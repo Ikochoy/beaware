@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Economics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" >
+    <link rel="stylesheet" href="../../static/css/beaware.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <style>
+        body{
+                font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+                font-size: 20px;
+            }
+        card-header{
+                max-width: 100%;
+        }
+        .us-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/ny.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+        }
+        .taiwan-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/tw.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+        }
+        .japan-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/tokyo.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+        }
+        .uk-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/london.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+        }
+        .europe-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/europe.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+        }
+        .cn-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/shanghai.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+        }
+        .wt{
+            color: white;
+        }
+         .bg-indigo{
+                background-color: #4751D4;
+                color: white;
+         }
+         .gen-img{
+                background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../../static/econ.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                color: white;
+        }
+
+    </style>
+    <script>
+            $(document).ready(function(){
+                if(sessionStorage.getItem('dark').localeCompare(true) == 0){
+                    toggle.checked = "true";
+                    body.classList.add('dark');
+                    for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].setAttribute("data-theme", "dark");
+                        }
+                    navmenu.classList.remove('navbar-light');
+                    navmenu.classList.add('navbar-dark');
+                    for(i=0;i<cards.length;i++){
+                        cards[i].classList.add('dark');
+                    }
+                }
+
+        });
+    </script>
+</head>
+<body>
+    <div id="navbar">
+            {% include 'website/navmenu.html' %}
+        </div>
+    <div class="row">
+        <div class="col-9">
+            <br>
+            <div class="container row text-center mx-auto">
+                <div id="dja" class="card col">
+                    <div class="card-title">
+                        <br><h4>Dow Jones Average (in USD)</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="../../static/usa.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/>
+                        {%for item, values in dowjones.items %}
+                        <h5 class="card-title">{{values.RTF }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ values.FC }}</h6>
+                        Previous Close:&nbsp;<span class="card-text">{{ values.PC }}</span><br>
+                        Open:&nbsp;<span class="card-text">{{ values.OP }}</span><br>
+                        Volume:&nbsp;<span class="card-text">{{ values.VL }}</span><br>
+                        Average Volume:&nbsp;<span class="card-text">{{ values.AVGVL }}</span><br>
+                        {%endfor%}
+                    </div>
+                </div>
+                <div id="hsi" class="card col text-center">
+                    <div class="card-title">
+                         <br><h4>Heng Seng Index (in HKD)</h4>
+                    </div>
+                    <div class="card-body">
+                        <img src="../../static/hongkong.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/>
+                        {% for item, values in hengseng.items %}
+                        <h5 class="card-title">{{values.RTF }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ values.FC }}</h6>
+                        Previous Close:&nbsp;<span class="card-text">{{ values.PC }}</span><br>
+                        Open:&nbsp;<span class="card-text">{{ values.OP }}</span><br>
+                        Volume:&nbsp;<span class="card-text">{{ values.VL }}</span><br>
+                        Average Volume:&nbsp;<span class="card-text">{{ values.AVGVL }}</span><br>
+                        {%endfor%}
+                    </div>
+                </div>
+                <div id="ftse" class="card col text-center">
+                    <div class="card-title">
+                         <br><h4>FTSE Index (in Pounds)</h4>
+                    </div>
+                    <div class="card-body">
+                        <img src="../../static/uk.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/>
+                        {%for item, values in london.items %}
+                        <h5 class="card-title">{{values.RTF }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ values.FC }}</h6>
+                        Previous Close:&nbsp;<span class="card-text">{{ values.PC }}</span><br>
+                        Open:&nbsp;<span class="card-text">{{ values.OP }}</span><br>
+                        Volume:&nbsp;<span class="card-text">{{ values.VL }}</span><br>
+                        Average Volume:&nbsp;<span class="card-text">{{ values.AVGVL }}</span><br>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div><br><br>
+            <div id="commodities" class="container">
+                 <h5>Commodities</h5>
+                <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                 <div class="card-deck">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Crude Oil</h5>
+                          {% for item, values in crudeoil.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Brent Crude Oil</h5>
+                          {%for item, values in brent.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Natural Gas</h5>
+                          {%for item, values in ng.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="card-deck">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Corn</h5>
+                          {%for item, values in crn.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Rough Rice</h5>
+                          {%for item, values in rr.items%}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Wheat</h5>
+                          {%for item, values in wt.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="card-deck">
+                        <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Oats</h5>
+                          {% for item, values in oats.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {% endfor %}
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Gold</h5>
+                          {% for item, values in gold.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {% endfor %}
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Silver</h5>
+                          {%for item, values in sil.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="card-deck">
+                        <div class="card" style="max-width: 29%">
+                        <div class="card-body">
+                          <h5 class="card-title">Platinum</h5>
+                          {%for item, values in pt.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                      <div class="card" style="max-width: 29%">
+                        <div class="card-body">
+                          <h5 class="card-title">Copper</h5>
+                          {%for item, values in cu.items %}
+                          Last Price:&nbsp;<span class="card-text">{{ values.RTF }}</span><br>
+                          Change:&nbsp;<span class="card-text text-muted">{{ values.FC  }}</span>
+                          {%endfor%}
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div><br><br>
+            <div id="Futures" class="container">
+                <h5>Futures</h5>
+                <div class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                 <div class="card-deck">
+                      <div class="card">
+                        <div class="card-body">
+                           <img src="../../static/usa.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title"> NASDAQ COMPOSITE Futures</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.DWJ }}</span><br>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="../../static/uk.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">FTSE 100 Futures</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.UK }}</span><br>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="../../static/hongkong.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">HANG SENG Futures</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.HSI }}</span><br>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="card-deck">
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="../../static/germany.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">DAX Futures</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.DAX }}</span><br>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                         <img src="../../static/singapore.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">SGX NIFTY Futures</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.SG }}</span><br>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="../../static/japan.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">NIKKEI 225 Futures</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.JAP }}</span><br>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="card-deck">
+                        <div class="card">
+                        <div class="card-body">
+                          <img src="../../static/europe.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">EURO STOXX 50 Futures</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.EU }}</span><br>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="../../static/china.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">SHANGHAI COMPOSITE</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.SH }}</span><br>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body">
+                          <img src="../../static/china.svg" class="img-responsive mx-auto d-block" style="max-width:25%"/><br>
+                          <h5 class="card-title">SHENZHEN COMPONENT</h5>
+                          Last Price:&nbsp;<span class="card-text">{{ futures.1.SZ }}</span><br>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 container">
+            <br>
+            <div class="card us-img wt" style="max-width: 80%;">
+              <div class="card-body">
+                <h5 class="card-title">USD-HKD</h5>
+                Last Price:&nbsp;<span>{{ currency.1.USD.0 }}</span><br>
+                Change:&nbsp;<span>{{ currency.1.USD.1 }}</span>
+              </div>
+            </div><br>
+
+            <div class="card japan-img wt" style="max-width: 80%">
+              <div class="card-body">
+                <h5 class="card-title">YEN-HKD</h5>
+                Last Price:&nbsp;<span>{{ currency.1.JPY.0 }}</span><br>
+                Change:&nbsp;<span>{{ currency.1.JPY.1 }}</span>
+              </div>
+            </div><br>
+            <div class="card uk-img wt" style="max-width: 80%">
+              <div class="card-body">
+                <h5 class="card-title">POUNDS-HKD</h5>
+                Last Price:&nbsp;<span>{{ currency.1.GBP.0 }}</span><br>
+                Change:&nbsp;<span>{{ currency.1.GBP.1 }}</span>
+              </div>
+            </div><br>
+            <div class="card europe-img wt" style="max-width: 80%">
+              <div class="card-body">
+                <h5 class="card-title">EURO-HKD</h5>
+                Last Price:&nbsp;<span>{{ currency.1.EUR.0 }}</span><br>
+                Change:&nbsp;<span>{{ currency.1.EUR.1 }}</span>
+              </div>
+            </div><br>
+            <div class="card taiwan-img wt" style="max-width: 80%">
+              <div class="card-body">
+                <h5 class="card-title">NTD-HKD</h5>
+                Last Price:&nbsp;<span>{{ currency.1.NTD.0 }}</span><br>
+                Change:&nbsp;<span>{{ currency.1.NTD.1 }}</span>
+              </div>
+            </div><br>
+            <div class="card cn-img wt" style="max-width: 80%">
+              <div class="card-body">
+                <h5 class="card-title">RMB-HKD</h5>
+                Last Price:&nbsp;<span>{{ currency.1.RMB.0 }}</span><br>
+                Change:&nbsp;<span>{{ currency.1.RMB.1 }}</span>
+              </div>
+            </div>
+        </div>
+
+    </div><br>
+    <div >
+        <div class="row">
+            <div class="col-8">
+             <img src="../../static/live_news.svg" class="img-responsive mx-auto d-block" style="max-width:5%"/><h3 class="text-center">CURRENT ECONOMICAL NEWS</h3>
+             <ul class="nav nav-tabs justify-content-center" id="CountriesTab" role="tablist">
+              <li class="nav-item">
+                 <a class="nav-link active" id="gen-tab" data-toggle="tab" href="#gen" role="tab" aria-controls="gen"
+                  aria-selected="true">General</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="us-tab" data-toggle="tab" href="#us" role="tab" aria-controls="us"
+                  aria-selected="true">USA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="uk-tab" data-toggle="tab" href="#uk" role="tab" aria-controls="uk"
+                  aria-selected="false">UK</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="cn-tab" data-toggle="tab" href="#cn" role="tab" aria-controls="cn"
+                   aria-selected="false">China</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="hk-tab" data-toggle="tab" href="#hk" role="tab" aria-controls="hk"
+                   aria-selected="false">Hong Kong</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="tw-tab" data-toggle="tab" href="#tw" role="tab" aria-controls="tw"
+                   aria-selected="false">Taiwan</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="sg-tab" data-toggle="tab" href="#sg" role="tab" aria-controls="sg"
+                   aria-selected="false">Singapore</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="jp-tab" data-toggle="tab" href="#jp" role="tab" aria-controls="jp"
+                   aria-selected="false">Japan</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="kr-tab" data-toggle="tab" href="#kr" role="tab" aria-controls="kr"
+                   aria-selected="false">South Korea</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="vt-tab" data-toggle="tab" href="#vt" role="tab" aria-controls="vt"
+                   aria-selected="false">Vietnam</a>
+              </li>
+        </ul><br>
+        <div class="tab-content container">
+            <div id="gen" class="tab-pane fade show active" role="tabpanel" aria-labelledby="gen-tab">
+                <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fnasdaqtrader.com%2Frss.aspx%3Ffeed%3Dcurrentheadlines%26categorylist%3D0&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fnasdaqtrader.com%2Frss.aspx%3Ffeed%3Dcurrentheadlines%26categorylist%3D0&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+            </div>
+            <div id="us" class="tab-pane fade" role="tabpanel" aria-labelledby="us-tab">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.cnbc.com%2Fid%2F10001147%2Fdevice%2Frss%2Frss.html&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.cnbc.com%2Fid%2F10001147%2Fdevice%2Frss%2Frss.html&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+            </div>
+            <div id="uk" role="tabpanel" aria-labelledby="uk-tab" class="tab-pane fade">
+                <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.bbci.co.uk%2Fnews%2Fbusiness%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Ffeeds.bbci.co.uk%2Fnews%2Fbusiness%2Frss.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+            </div>
+            <div id="cn" role="tabpanel" aria-labelledby="cn-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Frss.huanqiu.com%2Ffinance%2Fcjrd.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Frss.huanqiu.com%2Ffinance%2Fcjrd.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+            </div>
+            <div id="hk" role="tabpanel" aria-labelledby="hk-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.hkej.com%2Frss%2Fonlinenews.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.hkej.com%2Frss%2Fonlinenews.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+            </div>
+            <div id="tw" role="tabpanel" aria-labelledby="tw-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Ftw.stock.yahoo.com%2Frss%2Furl%2Fd%2Fe%2FN2.html%23&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Ftw.stock.yahoo.com%2Frss%2Furl%2Fd%2Fe%2FN2.html%23&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+            </div>
+            <div id="sg" role="tabpanel" aria-labelledby="sg-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.businesstimes.com.sg%2Frss%2Fstocks&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.businesstimes.com.sg%2Frss%2Fstocks&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+            </div>
+            <div id="jp" role="tabpanel" aria-labelledby="jp-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fjapantimes.co.jp%2Ffeed&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=http%3A%2F%2Fjapantimes.co.jp%2Ffeed&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+            </div>
+            <div id="kr" role="tabpanel" aria-labelledby="kr-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fen.yna.co.kr%2FRSS%2Feconomy.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fen.yna.co.kr%2FRSS%2Feconomy.xml&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+
+            </div>
+            <div id="vt" role="tabpanel" aria-labelledby="vt-tab" class="tab-pane fade">
+<script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.intellasia.net%2Fcategory%2Fvietnam%2Feconomy%2Ffeed&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.intellasia.net%2Fcategory%2Fvietnam%2Feconomy%2Ffeed&num=5&desc=250&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 100%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+
+            </div>
+        </div>
+        </div>
+            <div class="col-4">
+            <div class="text-center">
+                <br><h5>Market Technical Analysis (by Investing.com)</h5>
+            </div>
+            <script language="JavaScript" src="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.investing.com%2Frss%2Fmarket_overview_Technical.rss&num=10&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }"  charset="UTF-8" type="text/javascript"></script>
+<noscript>
+<a href="http://feed2js.org//feed2js.php?src=https%3A%2F%2Fwww.investing.com%2Frss%2Fmarket_overview_Technical.rss&num=10&utf=y&css=/* begin styles for RSS Feed */    .rss-box {  	 margin: 5px 5%;  	 padding: 4px 8px;  	 width: 20%;  	 background-color: #ffffff;           ffont-family: Futura, 'Trebuchet MS', Arial, sans-serif; 	  }    .rss-title, rss-title a {  	font-family: verdana, arial, sans-serif;  	font-size: 11;  	font-weight:normal;  	margin: 0px 0;  	padding: 0;  	letter-spacing: 1px;  }    .rss-items {      }    .rss-item  {    font-family: verdana, arial, sans-serif;    font-size: 11px;    font-weight : normal;     margin: 0px 0;  }    .rss-item a:link, .rss-item a:visited, .rss-item a:active {  	text-decoration : none;  	border-bottom: 1px solid #336699;  	color: #336699;  	}    .rss-item a:hover {   	text-decoration : none;  	color: #336699;  	border-bottom: 1px dotted #336699;  	}  	  .rss-date {  	font-size: 11px;  	font-weight : normal;  	color: #336699;  	}  /* buttons modeled from http://www.wellstyled.com/css-inline-buttons.html */  .pod-play {    _width:12em;    margin: 0 0.2em; padding: 0.1em 0; _padding:0;        white-space:nowrap;    text-decoration: none;    vertical-align:middle;    background: #fb6;    color: black;    } .pod-play em {    _width:1em; _cursor:hand;    font-style: normal;    margin:0; padding: 0.1em 0.5em;    background: white;    color: #222;    } .pod-play span {    _width:1em; _cursor:hand;    margin:0; padding: 0.1em 0.5em 0.1em 0.3em;    } .pod-play:hover {    background: #666;    color: white;    } .pod-play:hover em {    background: black;    color: white    }&html=y">View RSS feed</a>
+</noscript>
+
+        </div>
+        </div>
+        <div class="card-deck">
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by Bloomberg Market -->
+                   <a class="twitter-timeline" href="https://twitter.com/markets?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                       Tweets by markets</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by WSJ Market -->
+                   <a class="twitter-timeline" href="https://twitter.com/WSJmarkets?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                       Tweets by WSJmarkets</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by stockwits -->
+                    <a class="twitter-timeline" href="https://twitter.com/Stocktwits?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by Stocktwits</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by Bespoke Investment Group -->
+                    <a class="twitter-timeline" href="https://twitter.com/bespokeinvest?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by bespokeinvest</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="card scroll overflow-auto">
+                    <!-- Tweets by IBDinvestors -->
+                    <a class="twitter-timeline" href="https://twitter.com/IBDinvestors?ref_src=twsrc%5Etfw" data-height="400" data-chrome="nofooter">
+                        Tweets by IBDinvestors</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+
+            </div>
+    </div><br><br><br>
+
+    <footer id="footer" class="page-footer bg-indigo fixed-bottom">
+        <div class="toggler-container">
+                Light &nbsp;
+                <div class="toggle">
+                    <input type="checkbox" id="toggle" />
+                    <label for="toggle"></label>
+                </div>
+                &nbsp; Dark &nbsp;
+            </div>
+    </footer>
+    <script>
+            const toggle = document.getElementById('toggle');
+            const body = document.body;
+            const navmenu = document.getElementById('navmenu');
+            var cards = document.getElementsByClassName('card')
+            var twitter_timeline = document.getElementsByClassName('twitter-timeline');
+            if (toggle){
+                console.log("toggle not null");
+                toggle.addEventListener('input', (e) => {
+                    const isChecked = e.target.checked;
+                    if(isChecked) {
+                        sessionStorage.setItem('dark', true);
+                        var i;
+                        for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].setAttribute("data-theme", "dark");
+                        }
+                        navmenu.classList.remove('navbar-light');
+                        navmenu.classList.add('navbar-dark');
+                        for(i=0;i<cards.length;i++){
+                            cards[i].classList.add('dark');
+                        }
+                        body.classList.add('dark');
+
+                        location.reload();
+
+
+                    } else {
+                        sessionStorage.setItem('dark', false);
+                        for (i=0;i<twitter_timeline.length; i++){
+                            twitter_timeline[i].removeAttribute("data-theme", "light");
+
+                        }
+                        navmenu.classList.remove('navbar-dark');
+                        navmenu.classList.add('navbar-light');
+                        for(i=0;i<cards.length;i++){
+                            cards[i].classList.remove('dark');
+                        }
+                        body.classList.remove('dark');
+                        location.reload();
+                    }
+                });
+            }else{
+                console.log("toggle is null");
+            }
+        </script>
+
+</body>
+</html>

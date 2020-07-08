@@ -1,0 +1,28 @@
+{% if comment %}
+    <div class="modal-body justify-content-center">
+        <div style="border-left: 5px solid gray;" class="bg-light text-center p-2">
+            {{ comment.text }}
+        </div><br>
+        <textarea id="reply_comment_text" rows="5" cols="37"></textarea>
+        <div class="float-right py-3">
+            <button class="btn btn-primary" onclick="add_reply_comment('{{comment.pk}}')">Enter</button>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    function add_reply_comment(comment_id){
+        $.ajax({
+            url: "{% url 'website:add_reply_comment' %}",
+            data: {
+                'comment_id': comment_id,
+                'member_id': "{{user.member.pk}}",
+                'text': $('#reply_comment_text').val()
+            },
+            success: function(data){
+                window.location.reload()
+            }
+        });
+    }
+</script>
+

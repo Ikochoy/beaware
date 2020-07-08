@@ -1,0 +1,125 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/beaware.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+   <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+   <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+   <script>
+        $(document).ready( function(){
+            if(sessionStorage.getItem('dark').localeCompare(true) == 0){
+                toggle.checked = "true";
+                body.classList.add('dark');
+                navmenu.classList.remove('navbar-light');
+                navmenu.classList.add('navbar-dark');
+                form.classList.add('bg-dark');
+                form.classList.remove('bg-light');
+            }
+        });
+   </script>
+</head>
+<body>
+    <nav id="navmenu" class="navbar navbar-expand-sm justify-content-center navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:home' %}">Home</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:topnews' %}">Top News</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:politics' %}">Politics</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:economics' %}">Economics</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:technology' %}">Technology</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:environment' %}">Environment</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:culture' %}">Culture</a>
+            </li>
+            <li class="nav-item wt">
+                <a class="nav-link" href="{% url 'website:discussions' %}">Discussions</a>
+            </li>
+            <li class="nav-item ml-5">
+               <a class="btn btn-primary p-2 mt-2"  style="color:white;"
+                           href="{% url 'website:login_view' %}">Sign In</a>
+                        <a class="btn btn-info p-2 mt-2" href="{% url 'website:sign_up' %}"
+                        >Sign Up</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-center align-items-center py-5">
+            <div class="col">
+                <img src="../../static/world_2.svg" style="width: 80%;"><br>
+            </div>
+            <div class="col text-center justify-content-center">
+                <h2 class="">LOGIN</h2>
+                <form id="loginform" class="card p-5 mx-auto mt-4 bg-light" method="POST" style="border:none;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="login_username" class="form-control form-control-sm" id="username" placeholder="Username" >
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="login_password" class="form-control form-control-sm" id="password" placeholder="Password">
+                    </div>
+                    <input type="submit" name="submit" class="btn btn-secondary float-right" value="Login" style="width: 100%;"></input>
+                    {% if messages %}
+                        <div id="login_error">
+                        {% for message in messages %}
+                            <div class="alert alert-danger">
+                                <a class="close" href="#" data-dismiss="alert">×</a>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer id="footer" class="page-footer bg-indigo fixed-bottom padding-box">
+        <div class="toggler-container">
+            Light &nbsp;
+            <div class="toggle">
+                <input type="checkbox" id="toggle" />
+                <label for="toggle"></label>
+            </div>
+            &nbsp; Dark &nbsp;
+        </div>
+    </footer>
+    <script>
+        const toggle = document.getElementById('toggle');
+        const body = document.body;
+        const navmenu = document.getElementById('navmenu');
+        const form = document.getElementById('loginform');
+        if (toggle){
+            toggle.addEventListener('input', (e) => {
+                const isChecked = e.target.checked;
+                if(isChecked) {
+                    sessionStorage.setItem('dark', true);
+                    body.classList.add('dark');
+                    navmenu.classList.remove('navbar-light');
+                    navmenu.classList.add('navbar-dark');
+                    form.classList.add('bg-dark');
+                    form.classList.remove('bg-light');
+                } else {
+                    sessionStorage.setItem('dark', false);
+                    body.classList.remove('dark');
+                    navmenu.classList.remove('navbar-dark');
+                    navmenu.classList.add('navbar-light');
+                    form.classList.remove('bg-dark');
+                    form.classList.add('bg-light');
+                }
+            });
+        }else{
+            console.log("toggle is null");
+        }
+    </script>
+</body>
